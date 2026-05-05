@@ -39,26 +39,18 @@ body {
     color: #555;
 }
 
+/* GUEST DISPLAY */
 #guestDisplay {
     margin-top: 10px;
     font-size: 22px;
     color: #b08d57;
 }
 
-/* SECTION */
-.section {
-    padding: 80px 20px;
-}
-
-h2 {
-    color: #c6a55b;
-}
-
 /* INPUT BOX */
 .input-box {
-    margin: 10px;
     padding: 12px;
     width: 250px;
+    margin: 5px;
     border-radius: 10px;
     border: 1px solid #ccc;
 }
@@ -73,6 +65,16 @@ h2 {
     color: white;
     text-decoration: none;
     cursor: pointer;
+    border: none;
+}
+
+/* SECTIONS */
+.section {
+    padding: 70px 20px;
+}
+
+h2 {
+    color: #c6a55b;
 }
 
 /* DETAILS */
@@ -91,24 +93,30 @@ h2 {
 
 <!-- HERO -->
 <div class="hero">
+
     <h1>Heshani & Sarith</h1>
     <p>ENGAGEMENT CEREMONY</p>
 
-    <!-- GUEST DISPLAY -->
+    <!-- Guest preview -->
     <div id="guestDisplay"></div>
 
     <!-- INPUTS -->
-    <input id="guestName" class="input-box" placeholder="Enter Guest Name">
-    <input id="guestNumber" class="input-box" placeholder="Enter WhatsApp Number (947xxxxxxxx)">
+    <input id="gname" class="input-box" placeholder="Enter Guest Name">
+    <input id="gnum" class="input-box" placeholder="WhatsApp Number (947xxxxxxxx)">
 
     <br>
-    <button class="btn" onclick="generateInvite()">Generate Invitation</button>
+
+    <button class="btn" onclick="sendFullInvite()">Send Invitation</button>
 </div>
 
 <!-- STORY -->
 <div class="section">
 <h2>Our Story</h2>
-<p>Three beautiful years of love, laughter, and memories that brought us here today.</p>
+<p>
+Three years ago, our journey quietly began, and what started as a simple connection has grown into something truly beautiful.  
+Through every moment we’ve shared—filled with love, laughter, and understanding—we’ve built a bond that became stronger with time.  
+Today, we celebrate three wonderful years of love and step forward into a lifetime of togetherness and dreams.
+</p>
 </div>
 
 <!-- MOMENTS -->
@@ -125,35 +133,49 @@ src="https://raw.githubusercontent.com/sarithwiksitha98/wedding-invitation/main/
 <div class="details">
 <p><strong>Date:</strong> 29th May 2026</p>
 <p><strong>Time:</strong> 9.00 AM onwards</p>
-<p><strong>Venue:</strong> River's Edge Hotel, Madampe</p>
+<p><strong>Venue:</strong> River's Edge Hotel, Madampe, Sri Lanka</p>
 
 <iframe
 src="https://www.google.com/maps?q=Rivers%20Edge%20Hotel%20Madampe%20Sri%20Lanka&output=embed"
 width="100%" height="250" style="border:0;border-radius:15px;">
 </iframe>
+
 </div>
 </div>
 
 <script>
 
-/* SHOW NAME + SEND WHATSAPP */
-function generateInvite(){
+/* SHOW NAME + SEND INVITE */
+function sendFullInvite(){
 
-    let name = document.getElementById("guestName").value;
-    let number = document.getElementById("guestNumber").value;
+    let name = document.getElementById("gname").value;
+    let number = document.getElementById("gnum").value;
 
-    if(name){
-        document.getElementById("guestDisplay").innerHTML =
-        "Dear " + name + ", you are warmly invited 💛";
+    if(!name || !number){
+        alert("Please enter both name and number");
+        return;
     }
 
-    if(number && name){
-        let msg = `Dear ${name}, you are warmly invited to Heshani & Sarith's Engagement Ceremony on 29th May 2026.`;
+    // show on page
+    document.getElementById("guestDisplay").innerHTML =
+    "Dear " + name + ", you are warmly invited 💛";
 
-        let url = "https://wa.me/" + number + "?text=" + encodeURIComponent(msg);
+    // your website link (CHANGE THIS TO YOUR REAL LINK)
+    let baseLink = "https://yourusername.github.io/wedding-invitation/";
 
-        window.open(url);
-    }
+    let inviteLink = baseLink + "?name=" + encodeURIComponent(name);
+
+    let msg =
+`💍 Heshani & Sarith Engagement Invitation
+
+Dear ${name}, you are warmly invited 💛
+
+Click here to view your invitation:
+${inviteLink}`;
+
+    let url = "https://wa.me/" + number + "?text=" + encodeURIComponent(msg);
+
+    window.open(url);
 }
 
 </script>
